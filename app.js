@@ -6,8 +6,9 @@ var logger = require('morgan');
 var jwt = require('./helpers/jwt');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users/users.controller');
-var productRouter  = require('./routes/products/product.controller');
+var usersRouter = require('./routes/v1/users/users.controller');
+var productRouter  = require('./routes/v1/products/product.controller');
+var signUpRouter = require('./routes/signup')
 
 var app = express();
 /* 
@@ -37,8 +38,10 @@ app.use(jwt());
 
 // api routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/product', productRouter);
+app.use('/v1/user', usersRouter);
+app.use('/v1/product', productRouter);
+
+app.use('/signup', signUpRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
