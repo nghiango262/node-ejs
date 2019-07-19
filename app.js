@@ -3,13 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var jwt = require('./helpers/jwt');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users/users.controller');
 var productRouter  = require('./routes/products');
+var profileRouter = require('./routes/profile');
 
 var app = express();
-
+/* 
 var mongoClient = require('mongodb').MongoClient;
 mongoClient.connect('mongodb://nghia:Nghia123456@ds064649.mlab.com:64649/testt', { useNewUrlParser: true }, function (err, db) {
     //neu ket noi khong thanh cong thi in ra loi
@@ -17,6 +19,8 @@ mongoClient.connect('mongodb://nghia:Nghia123456@ds064649.mlab.com:64649/testt',
     //neu thanh cong thi log ra thong bao
     console.log('Ket noi thanh cong');
 });
+ */
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,9 +32,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//
+// use JWT auth to secure the api
+app.use(jwt());
+
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-app.use('/products', productRouter);
+app.use('/users', usersRouter);
+app.use('/product', productRouter);
+app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
