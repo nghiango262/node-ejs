@@ -7,8 +7,7 @@ var jwt = require('./helpers/jwt');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users/users.controller');
-var productRouter  = require('./routes/products');
-var profileRouter = require('./routes/profile');
+var productRouter  = require('./routes/products/product.controller');
 
 var app = express();
 /* 
@@ -36,10 +35,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // use JWT auth to secure the api
 app.use(jwt());
 
+// api routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/product', productRouter);
-app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
