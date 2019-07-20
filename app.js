@@ -36,12 +36,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // use JWT auth to secure the api
 app.use(jwt());
 
-// api routes
-app.use('/', indexRouter);
+// api routes V1
 app.use('/v1/user', usersRouter);
 app.use('/v1/product', productRouter);
 
+
+//
+app.use('/', indexRouter);
 app.use('/signup', signUpRouter);
+app.use('/dsusers', require('./routes/users'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
